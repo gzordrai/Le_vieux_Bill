@@ -1,0 +1,9 @@
+{
+    "prefix" : "/",
+    "token" : "",
+    "bot_info" : {
+        "name" : "Le vieux Bill",
+        "version" : "1"
+    },
+    "dbPath": "./data/database.json"
+}

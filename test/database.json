@@ -1,0 +1,13 @@
+{
+    "18": {
+        "balance": 500,
+        "cooldown": {
+            "collect": 0,
+            "daily": 0,
+            "duel": 0
+        },
+        "items": {
+            "shovel": 0
+        }
+    }
+}

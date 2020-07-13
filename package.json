@@ -1,0 +1,15 @@
+{
+  "name": "le_vieux_bill_v.4",
+  "version": "1.0.0",
+  "description": "Bot made for the CCD clan (Sea of thieves).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gzordrai",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "fs": "0.0.1-security"
+  }
+}

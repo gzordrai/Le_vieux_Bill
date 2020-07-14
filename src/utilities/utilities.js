@@ -1,5 +1,6 @@
 ;const fs = require('fs');
 const { data, dbPath } = require('../../index.js');
+const { SnowflakeUtil } = require('discord.js');
 
 const answers = [
     'en tuant un squelette !',
@@ -47,11 +48,21 @@ module.exports = {
 
         leaderboard: function () {
             let usersID = Object.keys(data.users);
-            let usersStats = [];
-            usersID.forEach(id => {
-                usersStats.push([id, data.users[id].balance]);
+            let usersInfo = {};
+            let balances = [];
+            let leaders = [];
+            usersID.forEach(ID => {
+                usersInfo[data.users[ID].balance] = ID;
             })
-            return usersStats;
+            let usersBalance = Object.keys(usersInfo);
+            usersBalance.forEach(balance => {
+                balances.push(parseInt(balance));
+            })
+            balances = balances.slice(balances.length - 10).reverse();
+            for(let i = 0; i < 10; i++){
+                leaders.push([usersInfo[balances[i]], balances[i]])
+            }
+            return leaders;
         },
     
         write: function(){

@@ -43,7 +43,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-
+    
   //Verify if the author of the message is not the bot and if the message starts with the prefix
   if (!message.content.startsWith(prefix) ||
     message.author.bot) return;

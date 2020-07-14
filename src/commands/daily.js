@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix } = require('../../config.json');
+const { prefix } = require('../../config.js');
 const utilities = require('../utilities/utilities.js');
 const db = utilities.db;
 const rand = utilities.rand;

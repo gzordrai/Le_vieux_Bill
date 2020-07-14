@@ -47,15 +47,11 @@ module.exports = {
 
         leaderboard: function () {
             let usersID = Object.keys(data.users);
-            let usersBalance = [];
-            let leaders = [];
-            usersID.forEach(i => {
-                usersBalance.push(data.users[i].balance);
-            });
-            for(let i = 0; i < 10; i++){
-                leaders.push(Math.max(...usersBalance));
-                usersBalance = usersBalance.filter(balances => balances !== Math.max(...usersBalance))
-            }
+            let usersStats = [];
+            usersID.forEach(id => {
+                usersStats.push([id, data.users[id].balance]);
+            })
+            return usersStats;
         },
     
         write: function(){

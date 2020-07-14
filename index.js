@@ -1,7 +1,7 @@
 //Load Discord library and bot config
 const fs = require('fs');
 const Discord = require('discord.js');
-const {prefix, token, dbPath} = require('./config.json');
+const {prefix, token, dbPath} = require('./config/config.js');
 module.exports = {
   data: JSON.parse(fs.readFileSync(dbPath, 'utf8')),
   dbPath: dbPath

@@ -4,8 +4,8 @@ const db = utilities.db;
 
 module.exports = {
     name: 'leaderboard',
-    aliases: [''],
-    description: '',
+    aliases: ['lead', 'scoring', 'classification', 'grading', 'ranking'],
+    description: 'Vous permet de consulter la liste des 10 membres les plus riches',
     args: false,
     usage: '',
     

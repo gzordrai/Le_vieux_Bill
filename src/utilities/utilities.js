@@ -1,6 +1,5 @@
-;const fs = require('fs');
+const fs = require('fs');
 const { data, dbPath } = require('../../index.js');
-const { SnowflakeUtil } = require('discord.js');
 
 const answers = [
     'en tuant un squelette !',

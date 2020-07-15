@@ -2,7 +2,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const {prefix, token, dbPath, channelName} = require('./config/config.js');
-const rand = require('./src/utilities/utilities.js').rand;
+
 module.exports = {
 data: JSON.parse(fs.readFileSync(dbPath, 'utf8')),
 dbPath: dbPath
@@ -88,6 +88,7 @@ try {
 
 client.on('voiceStateUpdate', (oldState, newState) => {
 
+var rand = require('./src/utilities/utilities.js').rand;
 var newStateChannelID = newState.channelID;// ID du nouveau channel
 var oldStateChannelID = oldState.channelID;// ID de l'ancien channel
 

@@ -19,8 +19,13 @@ module.exports = {
         .setFooter('Merci de contacter le bot par message privé en cas de problème.');
 
         for(let i = 0; i < 10; i++){
-            username = message.guild.members.cache.get(leaders[i][0]).user.username;
-            embed.addField(`${i + 1}. ${username}`, `Solde: ${leaders[i][1]} pièces d'or`);
+            let user = message.guild.members.cache.get(leaders[i][0])
+            if (user !== undefined){
+                username = message.guild.members.cache.get(leaders[i][0]).user.username;
+                embed.addField(`${i + 1}. ${username}`, `Solde: ${leaders[i][1]}`);
+            } else {
+                console.log(`${leaders[i][0]} is not in the guild !`);
+            }
         }
 
         message.channel.send(embed);

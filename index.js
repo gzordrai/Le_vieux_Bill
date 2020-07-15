@@ -1,7 +1,8 @@
 //Load Discord library and bot config
 const fs = require('fs');
 const Discord = require('discord.js');
-const {prefix, token, dbPath} = require('./config/config.js');
+const {prefix, token, dbPath, channelName} = require('./config/config.js');
+const rand = require('./src/utilities/utilities.js').rand;
 module.exports = {
   data: JSON.parse(fs.readFileSync(dbPath, 'utf8')),
   dbPath: dbPath
@@ -11,24 +12,6 @@ module.exports = {
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
-
-/*//Load commands file insynchronously
-fs.readdir("./src/commands/", (err, files) => {
-
-  if(err) console.log(err);
-
-  //Filter js files in "./src/commands/" folder 
-  let jsfile = files.filter(file => file.endsWith('.js'));
-  if(jsfile.length <= 0) return console.log("No js files in commands folder !");
-
-  jsfile.forEach((i) =>{
-
-    //Load all js files in "./src/commands/" folder and add the command in the commands list
-    let command = require(`./src/commands/${i}`);
-    console.log(`${i} has been loaded !`);
-    client.commands.set(command.name, command);
-  });
-});*/
 
 const commandFiles = fs.readdirSync('./src/commands/').filter(file => file.endsWith('.js'));
 
@@ -43,7 +26,7 @@ client.on('ready', () => {
 });
 
 client.on('message', message => {
-    
+
   //Verify if the author of the message is not the bot and if the message starts with the prefix
   if (!message.content.startsWith(prefix) ||
     message.author.bot) return;
@@ -100,6 +83,45 @@ client.on('message', message => {
   } catch (error) {
     console.error(error);
     message.reply("Une erreur est survenue pendant l'exécution de la commande ! Merci de bien vouloir contacter un responsable");
+  }
+});
+
+client.on('voiceStateUpdate', (oldState, newState) => {
+
+  var newStateChannelID = newState.channelID;// ID du nouveau channel
+  var oldStateChannelID = oldState.channelID;// ID de l'ancien channel
+
+  switch(newStateChannelID){
+      case '679064329684779056':// Créer Sloop
+          CreateShip(newState, 4, 'Sloop')
+      break;
+
+      case '673601916583936038':// Créer Brigantin
+          CreateShip(newState, 5, 'Brigantin')
+      break;
+
+      case '679063311693905942':// Créer Galion
+          CreateShip(newState, 6,'Galion')
+      break;
+  }
+
+  if(oldStateChannelID === null || oldStateChannelID === undefined)return;
+  let oldStateChannel = oldState.channel;
+  if(oldStateChannel.parentID !== '581155233875623949')return;
+  if(oldStateChannel.members.size !== 0)return;
+  if(oldStateChannelID === '679064329684779056' || oldStateChannelID === '673601916583936038' || oldStateChannelID === '679063311693905942' || oldStateChannelID === '729320569899712583')return;
+  oldStateChannel.delete();
+
+  function CreateShip(newState, UserNumbrer, name) {// Fonction de création des channels vocaux
+      newState.channel.guild.channels.create(`${name} ${channelName[rand.int(0, 8)]}`,{
+          type: 'voice',
+          parent: '581155233875623949',
+          userLimit: UserNumbrer,
+      })
+      .then(VoiceChannel => {
+          let VoiceID = VoiceChannel.id;
+          newState.member.voice.setChannel(VoiceID);
+      });
   }
 
 });

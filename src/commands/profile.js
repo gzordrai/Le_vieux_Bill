@@ -15,8 +15,8 @@ module.exports = {
         .setFooter('Merci de contacter le bot par message privé en cas de problème.');
 
         if (args[0]) {
-            if (args[0].startsWith('<@') && args[0].endsWith('>')) {
-                let userID = args[0].slice(2, 20);
+            if (args[0].startsWith('<@!') && args[0].endsWith('>')) {
+                let userID = args[0].slice(3, 21);
                 let user = message.guild.members.cache.get(userID).user;
                 embed.setTitle(`Compte de ${user.username}`)
                 .setThumbnail(user.avatarURL({dynamic: true}))

@@ -25,14 +25,19 @@ module.exports = {
     db: {
         register: function (userID) {
             data.users[userID] = {
-                balance: 1000000,
-                items: {}
+                warn: {
+                    warnNumber: 0,
+                },
+                game: {
+                    balance: 100,
+                    items: {}
+                }
             }
             this.write();
         },
     
         showBalance: function (userID) {
-            return data.users[userID].balance;
+            return data.users[userID].game.balance;
         },
 
         isValidAccount: function(userID) {
@@ -41,7 +46,7 @@ module.exports = {
         },
     
         add: function (userID, amount) {
-            data.users[userID].balance += amount;
+            data.users[userID].game.balance += amount;
             this.write();
         },
 
@@ -51,7 +56,7 @@ module.exports = {
             let balances = [];
             let leaders = [];
             usersID.forEach(ID => {
-                usersInfo[data.users[ID].balance] = ID;
+                usersInfo[data.users[ID].game.balance] = ID;
             })
             let usersBalance = Object.keys(usersInfo);
             usersBalance.forEach(balance => {

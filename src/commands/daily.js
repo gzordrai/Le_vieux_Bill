@@ -23,7 +23,7 @@ module.exports = {
         }
 
         let reward = rand.int(0, 200);
-        db.add(authorID, reward);
+        db.game.add(authorID, reward);
         embed.setTitle(`Vous avez récupéré ${reward} pièces d'or ${rand.answer()}`)
             .setColor('GREEN');
         message.channel.send(embed);

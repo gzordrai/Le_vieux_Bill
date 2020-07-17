@@ -26,11 +26,11 @@ module.exports = {
             return message.channel.send(embed);
         }
 
-        if (db.showBalance(authorID) < price) {
+        if (db.game.showBalance(authorID) < price) {
             embed.setTitle(`Vous n'avez pas assez de pièces d'or !`);
             return message.channel.send(embed);
         }
-        db.add(authorID, -price);
+        db.game.add(authorID, -price);
 
         for (let i = 0; i < 3; i++) {
             draw.push(emojis[rand.int(0, emojis.length)]);
@@ -39,22 +39,22 @@ module.exports = {
         message.channel.send(`[${draw[0]}][${draw[1]}][${draw[2]}]`);
 
         if (draw[0] === draw[1] && draw[1]=== draw[2] && draw[0] === emojis[0]) {
-            db.add(authorID, price*2);
+            db.game.add(authorID, price*2);
             message.channel.send(`Vous remportez le bouble du prix de départ (2X${price})`);
         };
 
         if (draw[0] === draw[1] && draw[1]=== draw[2] && draw[0] === emojis[1]) {
-            db.add(authorID, price*10);
+            db.game.add(authorID, price*10);
             message.channel.send(`Vous remportez le 10 fois le prix de départ (10X${price})`);
         };
 
         if (draw[0] === draw[1] && draw[1 ]=== draw[2] && draw[0] === emojis[2]) {
-            db.add(authorID, price);
+            db.game.add(authorID, price);
             message.channel.send(`Vous remportez le prix de départ (${price})`);
         };
 
         if (draw[0] === draw[1] && draw[1 ]=== draw[2] && draw[0] === emojis[3]) {
-            db.add(authorID, -price);
+            db.game.add(authorID, -price);
             message.channel.send(`Vous perdez encore un fois le prix de départ ${price}`);
         };
     }

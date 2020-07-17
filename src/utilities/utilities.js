@@ -35,44 +35,46 @@ module.exports = {
             }
             this.write();
         },
-    
-        showBalance: function (userID) {
-            return data.users[userID].game.balance;
-        },
 
         isValidAccount: function(userID) {
             if(data.users[userID] === undefined) return false;
             return true;
         },
     
-        add: function (userID, amount) {
-            data.users[userID].game.balance += amount;
-            this.write();
-        },
-
-        leaderboard: function () {
-            let usersID = Object.keys(data.users);
-            let usersInfo = {};
-            let balances = [];
-            let leaders = [];
-            usersID.forEach(ID => {
-                usersInfo[data.users[ID].game.balance] = ID;
-            })
-            let usersBalance = Object.keys(usersInfo);
-            usersBalance.forEach(balance => {
-                balances.push(parseInt(balance));
-            })
-            balances = balances.slice(balances.length - 10).reverse();
-            for(let i = 0; i < 10; i++){
-                leaders.push([usersInfo[balances[i]], balances[i]])
-            }
-            return leaders;
-        },
-    
         write: function(){
             fs.writeFileSync(dbPath, JSON.stringify(data, null, 4), err => {
                 if (err) throw err;
             })
-        }
+        },
+        
+        game: {
+            showBalance: function (userID) {
+                return data.users[userID].game.balance;
+            },
+
+            add: function (userID, amount) {
+                data.users[userID].game.balance += amount;
+                this.write();
+            },
+    
+            leaderboard: function () {
+                let usersID = Object.keys(data.users);
+                let usersInfo = {};
+                let balances = [];
+                let leaders = [];
+                usersID.forEach(ID => {
+                    usersInfo[data.users[ID].game.balance] = ID;
+                })
+                let usersBalance = Object.keys(usersInfo);
+                usersBalance.forEach(balance => {
+                    balances.push(parseInt(balance));
+                })
+                balances = balances.slice(balances.length - 10).reverse();
+                for(let i = 0; i < 10; i++){
+                    leaders.push([usersInfo[balances[i]], balances[i]])
+                }
+                return leaders;
+            },
+        },
     }
 }

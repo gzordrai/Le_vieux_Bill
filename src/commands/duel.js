@@ -33,8 +33,8 @@ module.exports = {
         if(stake <= 0)
             return message.reply(`montant de la mise invalide !`);
 
-        if(db.showBalance(authorID) < stake ||
-        db.showBalance(userMentionID) < stake)
+        if(db.game.showBalance(authorID) < stake ||
+        db.game.showBalance(userMentionID) < stake)
             return message.reply(`Un utilisateur n'a pas assez de pièces d'or`);
 
         message.delete();
@@ -66,8 +66,8 @@ module.exports = {
                 message.channel.send(`<@${authorID}>, ${userMention} a accepté le duel !`)
                 .then(message => {
 
-                    db.add(authorID, -stake);
-                    db.add(userMentionID, -stake);
+                    db.game.add(authorID, -stake);
+                    db.game.add(userMentionID, -stake);
 
                     setTimeout(function() {
                         message.edit('Pan pan ! 2 Coups de feu ont été tirés !');
@@ -82,13 +82,13 @@ module.exports = {
                         if(authorValue < userMentionValue){
                             message.channel.send(`<@${authorID}> a gagné en tirant en ${authorValue}ms ! Son adversaire est mort en tirant en ${userMentionValue}ms !`);
                             message.channel.send(`Il gagne donc ${stake} pièces d'or !`);
-                            db.add(authorID, stake);
+                            db.game.add(authorID, stake);
                         }
 
                         if(authorValue > userMentionValue){
                             message.channel.send(`${userMention} a gagné en tirant en ${userMentionValue}ms ! Son adversaire est mort en tirant en ${authorValue}ms !`);
                             message.channel.send(`Il gagne donc ${stake} pièces d'or !`);
-                            db.add(userMentionID, stake);
+                            db.game.add(userMentionID, stake);
                         }
 
                         if(authorValue === userMentionValue){

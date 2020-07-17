@@ -11,7 +11,7 @@ module.exports = {
     
     execute(message) {
 
-        let leaders = db.leaderboard();
+        let leaders = db.game.leaderboard();
         let username;
         let embed = new Discord.MessageEmbed()
         .setColor('BLUE')

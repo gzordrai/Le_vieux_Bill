@@ -22,7 +22,7 @@ module.exports = {
         }
 
         let reward = 40;
-        db.add(authorID, reward);
+        db.game.add(authorID, reward);
         embed.setTitle(`Vous avez récupéré ${reward} pièces d'or en vendant un vieux coffre !`)
             .setColor('GREEN');
         message.channel.send(embed);

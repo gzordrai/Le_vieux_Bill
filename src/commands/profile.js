@@ -20,7 +20,7 @@ module.exports = {
                 let user = message.guild.members.cache.get(userID).user;
                 embed.setTitle(`Compte de ${user.username}`)
                 .setThumbnail(user.avatarURL({dynamic: true}))
-                .addField('Solde', db.showBalance(userID));
+                .addField('Solde', db.game.showBalance(userID));
                 message.channel.send(embed);
             }
         } else {
@@ -31,7 +31,7 @@ module.exports = {
                 .setTitle(`Compte de ${author.username}`)
                 .setColor('BLUE')
                 .setThumbnail(author.avatarURL({dynamic: true}))
-                .addField('Solde', db.showBalance(authorID))
+                .addField('Solde', db.game.showBalance(authorID))
                 .setFooter('Merci de contacter le bot par message privé en cas de problème.');
             message.channel.send(embed);
         }

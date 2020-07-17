@@ -47,6 +47,27 @@ module.exports = {
             })
         },
         
+        warn: {
+            add: function (userID, reason) {
+                let warnNumber = data[userID].warn.warnNumber + 1;
+                data[userID].warn.warnNumber = warnNumber;
+                data[userID].warn['#' + warnNumber] = {
+                    reason: reason,
+                    date: new Date()
+                }
+                this.write();
+            },
+    
+            delete: function (userID, warnNumber) {
+                if (data[userID].warn[warnNumber] === undefined)
+                    return false;
+                delete data[userID].warn[warnNumber];
+                data[userID].warn.warnNumber--;
+                this.write();
+                return true;
+            },
+        },
+
         game: {
             showBalance: function (userID) {
                 return data.users[userID].game.balance;

@@ -60,7 +60,7 @@ if (!cooldowns.has(command.name)) {
 //Retrieves the date of the command and checks if the command has a cooldown property, if not the cooldown is 3 seconds
 const now = Date.now();
 const timestamps = cooldowns.get(command.name);
-const cooldownAmount = (command.cooldown || 3) * 1000;
+const cooldownAmount = (command.cooldown || 0) * 1000;
 
 //Verify if in the command collection has author ID
 if (timestamps.has(message.author.id)) {

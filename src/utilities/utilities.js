@@ -66,6 +66,12 @@ module.exports = {
                 this.write();
                 return true;
             },
+
+            write: function(){
+                fs.writeFileSync(dbPath, JSON.stringify(data, null, 4), err => {
+                    if (err) throw err;
+                })
+            },
         },
 
         game: {
@@ -95,6 +101,12 @@ module.exports = {
                     leaders.push([usersInfo[balances[i]], balances[i]])
                 }
                 return leaders;
+            },
+
+            write: function(){
+                fs.writeFileSync(dbPath, JSON.stringify(data, null, 4), err => {
+                    if (err) throw err;
+                })
             },
         },
     }

@@ -16,60 +16,72 @@ module.exports = {
         let author = message.author;
         let authorID = author.id;
         let price = 100;
-        let emojis = ['🍒', '💸', '🍌', '🍎'];
+        let emojis = ['💸', '🍒', '🍌', '🍎'];
         let draw = [];
+        let amount = args[0];
         let embed = new Discord.MessageEmbed()
             .setColor('RED')
             .setFooter('Merci de contacter le bot par message privé en cas de problème.');
-
-        var amount = args[0];
 
         if (amount === undefined || !Number.isInteger(parseInt(amount))){
             amount = 1;
         }
 
-        if (!db.isValidAccount(authorID)){
+        if(!db.isValidAccount(authorID)){
             embed.setTitle(`Vous n'avez pas de compte ! Merci de bien vouloir faire ${prefix}register !`);
             return message.channel.send(embed);
         }
 
-        if (db.game.showBalance(authorID) < price * amount) {
+        if(db.game.showBalance(authorID) < price * amount) {
             embed.setTitle(`Vous n'avez pas assez de pièces d'or !`);
             return message.channel.send(embed);
         }
+
         db.game.add(authorID, -price * amount);
 
-        for (let around = 0; around < amount; around++){
+        for(let around = 0; around < amount; around++) {
 
-            if (draw.length === 3){
+            if(draw.length === 3) {
                 draw = [];
             }
 
-            for (let i = 0; i < 3; i++) {
-                draw.push(emojis[rand.int(0, emojis.length)]);
+            for(let i = 0; i < 3; i++) {
+                draw.push(rand.int(0, emojis.length));
             }
-    
-            message.channel.send(`[${draw[0]}][${draw[1]}][${draw[2]}]`);
-    
-            if (draw[0] === draw[1] && draw[1] === draw[2] && draw[0] === emojis[0]) {
-                db.game.add(authorID, price*50);
-                message.channel.send(`Vous remportez 50 fois le prix de départ (50X${price})`);
-            };
-    
-            if (draw[0] === draw[1] && draw[1]=== draw[2] && draw[0] === emojis[1]) {
-                db.game.add(authorID, price*100);
-                message.channel.send(`Vous remportez le 100 fois le prix de départ (100X${price})`);
-            };
-    
-            if (draw[0] === draw[1] && draw[1]=== draw[2] && draw[0] === emojis[2]) {
-                db.game.add(authorID, price*10);
-                message.channel.send(`Vous remportez 10 fois le prix de départ (10x${price})`);
-            };
-    
-            if (draw[0] === draw[1] && draw[1]=== draw[2] && draw[0] === emojis[3]) {
-                db.game.add(authorID, price*2);
-                message.channel.send(`Vous remportez 2 fois le prix de départ (2x${price})`);
-            };
+
+            if(draw[0] === draw[1] && draw[0] === draw[2]) {
+
+                let pourcentage = rand.int(1, 100);
+                let reply = `Vous avez remporter `;
+
+                switch(pourcentage) {
+                    case 1:
+                        db.game.add(authorID, price * 100);
+                        message.channel.send(`[${emojis[0]}][${emojis[0]}][${emojis[0]}]`);
+                        reply += '100 fois le prix de départ';
+                    break;
+                    case pourcentage > 1 && pourcentage <= 6:
+                        db.game.add(authorID, price * 50);
+                        message.channel.send(`[${emojis[1]}][${emojis[1]}][${emojis[1]}]`);
+                        reply += '50 fois le prix de départ';
+                    break;
+                    case pourcentage > 6 && pourcentage <= 16:
+                        db.game.add(authorID, price * 10);
+                        message.channel.send(`[${emojis[2]}][${emojis[2]}][${emojis[2]}]`);
+                        reply += '10 fois le prix de départ';
+                    break;
+                    case pourcentage > 16:
+                        db.game.add(authorID, price * 2);
+                        message.channel.send(`[${emojis[3]}][${emojis[3]}][${emojis[3]}]`);
+                        reply += '2 fois le prix de départ';
+                    break;
+                }
+
+                message.channel.send(reply);
+
+            } else {
+                message.channel.send(`[${emojis[draw[0]]}][${emojis[draw[1]]}][${emojis[draw[2]]}]`);
+            }
         }
     }
 }
